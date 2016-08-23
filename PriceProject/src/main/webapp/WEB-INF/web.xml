@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" 
+         version="2.5" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+     <display-name>Archetype Created Web Application</display-name>
+  <context-param> 
+    <description>Location to store uploaded file</description> 
+    <param-name>file-upload</param-name> 
+    <param-value>
+         c:\MARINA\Soft\apache-tomcat-8.0.36\webapps\data\
+     </param-value> 
+</context-param>
+  
+  <servlet>
+  	<servlet-name>UploadServlet</servlet-name>  
+  	<servlet-class>servlet.UploadServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<description>
+  	</description>
+  	<display-name>Parsing</display-name>
+  	<servlet-name>Parsing</servlet-name>
+  	<servlet-class>servlet.Parsing</servlet-class>
+  </servlet>
+  <servlet>
+  	<description>
+  	</description>
+  	<display-name>DBconnect</display-name>
+  	<servlet-name>DBconnect</servlet-name>
+  	<servlet-class>servlet.DBconnect</servlet-class>
+  </servlet>
+  <servlet>
+  	<description>
+  	</description>
+  	<display-name>WriteCSV</display-name>
+  	<servlet-name>WriteCSV</servlet-name>
+  	<servlet-class>servlet.WriteCSV</servlet-class>
+  </servlet>
+  <servlet>
+  	<description>
+  	</description>
+  	<display-name>ConvertCsvToXlsx</display-name>
+  	<servlet-name>ConvertCsvToXlsx</servlet-name>
+  	<servlet-class>servlet.ConvertCsvToXlsx</servlet-class>
+  </servlet>
+  <servlet>
+  	<description>
+  	</description>
+  	<display-name>FileInfo</display-name>
+  	<servlet-name>FileInfo</servlet-name>
+  	<servlet-class>servlet.FileInfo</servlet-class>
+  </servlet>
+  <servlet>
+  	<description>
+  	</description>
+  	<display-name>UpdateCSV</display-name>
+  	<servlet-name>UpdateCSV</servlet-name>
+  	<servlet-class>servlet.UpdateCSV</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>UploadServlet</servlet-name>
+  	<url-pattern>/UploadServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>Parsing</servlet-name>
+  	<url-pattern>/Parsing</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>DBconnect</servlet-name>
+  	<url-pattern>/DBconnect</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>WriteCSV</servlet-name>
+  	<url-pattern>/WriteCSV</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ConvertCsvToXlsx</servlet-name>
+  	<url-pattern>/ConvertCsvToXlsx</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>FileInfo</servlet-name>
+  	<url-pattern>/FileInfo</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>UpdateCSV</servlet-name>
+  	<url-pattern>/UpdateCSV</url-pattern>
+  </servlet-mapping>  
+  
+</web-app>
