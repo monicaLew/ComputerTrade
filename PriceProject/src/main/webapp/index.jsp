@@ -28,6 +28,16 @@ Select a file to upload: <br /><br/>
 <br/>
 <br/>
 <br/>
+<form action="CsvRead" method="post"
+                        enctype="multipart/form-data">
+<input type="submit" value=" CsvReaderMy " />
+</form>	
+<br/>
+<form action="ConvertCsvToXlsx" method="post"
+                        enctype="multipart/form-data">
+<input type="submit" value=" Convert CSV to Excel(it doesn't work)" />
+</form>	
+<br/>
 <br/>
 <form action="DBconnect" method="post"
                         enctype="multipart/form-data">

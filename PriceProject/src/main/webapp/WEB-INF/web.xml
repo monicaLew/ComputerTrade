@@ -9,56 +9,63 @@
     <description>Location to store uploaded file</description> 
     <param-name>file-upload</param-name> 
     <param-value>
-         c:\MARINA\Soft\apache-tomcat-8.0.36\webapps\data\
+    c:\MARINA\Soft\apache-tomcat-8.0.36\webapps\data\        
      </param-value> 
-</context-param>
-  
+</context-param>  
   <servlet>
   	<servlet-name>UploadServlet</servlet-name>  
-  	<servlet-class>servlet.UploadServlet</servlet-class>
+  	<servlet-class>com.pctrade.price.servlet.UploadServlet</servlet-class>
   </servlet>
   <servlet>
   	<description>
   	</description>
   	<display-name>Parsing</display-name>
   	<servlet-name>Parsing</servlet-name>
-  	<servlet-class>servlet.Parsing</servlet-class>
+  	<servlet-class>com.pctrade.price.servlet.Parsing</servlet-class>
   </servlet>
   <servlet>
   	<description>
   	</description>
   	<display-name>DBconnect</display-name>
   	<servlet-name>DBconnect</servlet-name>
-  	<servlet-class>servlet.DBconnect</servlet-class>
+  	<servlet-class>com.pctrade.price.servlet.DBconnect</servlet-class>
   </servlet>
   <servlet>
   	<description>
   	</description>
   	<display-name>WriteCSV</display-name>
   	<servlet-name>WriteCSV</servlet-name>
-  	<servlet-class>servlet.WriteCSV</servlet-class>
+  	<servlet-class>com.pctrade.price.servlet.WriteCSV</servlet-class>
   </servlet>
   <servlet>
   	<description>
   	</description>
   	<display-name>ConvertCsvToXlsx</display-name>
   	<servlet-name>ConvertCsvToXlsx</servlet-name>
-  	<servlet-class>servlet.ConvertCsvToXlsx</servlet-class>
+  	<servlet-class>com.pctrade.price.servlet.ConvertCsvToXlsx</servlet-class>
   </servlet>
   <servlet>
   	<description>
   	</description>
   	<display-name>FileInfo</display-name>
   	<servlet-name>FileInfo</servlet-name>
-  	<servlet-class>servlet.FileInfo</servlet-class>
+  	<servlet-class>com.pctrade.price.servlet.FileInfo</servlet-class>
   </servlet>
   <servlet>
   	<description>
   	</description>
   	<display-name>UpdateCSV</display-name>
   	<servlet-name>UpdateCSV</servlet-name>
-  	<servlet-class>servlet.UpdateCSV</servlet-class>
+  	<servlet-class>com.pctrade.price.servlet.UpdateCSV</servlet-class>
   </servlet>
+  <servlet>
+  	<description>
+  	</description>
+  	<display-name>CsvRead</display-name>
+  	<servlet-name>CsvRead</servlet-name>
+  	<servlet-class>com.pctrade.price.servlet.CsvRead</servlet-class>
+  </servlet>
+  
   <servlet-mapping>
   	<servlet-name>UploadServlet</servlet-name>
   	<url-pattern>/UploadServlet</url-pattern>
@@ -86,6 +93,10 @@
   <servlet-mapping>
   	<servlet-name>UpdateCSV</servlet-name>
   	<url-pattern>/UpdateCSV</url-pattern>
-  </servlet-mapping>  
-  
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>CsvRead</servlet-name>
+  	<url-pattern>/CsvRead</url-pattern>
+  </servlet-mapping>
+     
 </web-app>
