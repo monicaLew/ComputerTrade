@@ -3,12 +3,6 @@ package com.pctrade.price.servlet;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.Iterator;
 
 import javax.servlet.ServletException;
@@ -26,6 +20,9 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import com.pctrade.price.dao.DaoProductImpl;
+import com.pctrade.price.entity.Product;
+
 @WebServlet("/parse")
 public class Parsing extends HttpServlet {
 
@@ -41,98 +38,73 @@ public class Parsing extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		final String user = "root";
-		final String password = "root";
-		// final String filePath =
-		// "c:\\MARINA\\Soft\\apache-tomcat-8.0.36\\webapps\\data\\";
+
 		HttpSession session = request.getSession();
 		final String filePath = getServletContext().getInitParameter("file-upload")
 				+ session.getAttribute("lastFileNameUpload");
 
 		session.setAttribute("path", filePath);
+		DaoProductImpl daoProductImpl = new DaoProductImpl();
+		daoProductImpl.deleteTable();
 
-		Connection cn = null;
-		PreparedStatement prepStmt = null;
-		Statement stmt = null;
-		int count = 0;
-		ArrayList<String> mylist = new ArrayList<String>();
+		FileInputStream fis = new FileInputStream(new File(filePath));
+		System.out.println("FileInputStream Object created..! ");
 
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
+		XSSFWorkbook workbook = new XSSFWorkbook(fis);
+		System.out.println("XSSFWorkbook Object created..! ");
 
-			System.out.println("Driver Found");
-		} catch (ClassNotFoundException e) {
+		XSSFSheet sheet = workbook.getSheetAt(0);
+		System.out.println("XSSFSheet Object created..! ");
 
-			System.out.println("Driver not Found:" + e);
-		}
-		try {
-			cn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/PC_TRADE", user, password);
-			System.out.println("Connection :: [" + cn + "]");
-			prepStmt = cn.prepareStatement(INSERT_RECORDS);
-			stmt = cn.createStatement();
-			//ResultSet result = stmt.executeQuery("SET AUTOCOMMIT = 0");
-			// while(result.next()) {
-			// int val = result.getInt(1);
-			// System.out.println("* * * * *");
-			// System.out.println(val);
-			// count = val+1;
-			// }
-			// prepStmt.setInt(1,count);              // ааа, это идет подсчет строк и вставл номер строки в ее начало
+		Iterator ite = sheet.rowIterator();
+		System.out.println("Row Iterator invoked..! ");
 
-			FileInputStream fis = new FileInputStream(new File(filePath));
-			System.out.println("FileInputStream Object created..! ");
+		String date = (String) session.getAttribute("dateOfUpload");
 
-			XSSFWorkbook workbook = new XSSFWorkbook(fis);
-			System.out.println("XSSFWorkbook Object created..! ");
+		Product product = new Product();
+		int incorrect = 0;
+		while (ite.hasNext()) {
+			Row row = (Row) ite.next();
+			System.out.println("Row value fetched..! ");
+			Iterator<Cell> cellIterator = row.cellIterator();
+			System.out.println("Cell Iterator invoked..! ");
+			int index = 1;
+			while (cellIterator.hasNext() && index < 4) {
+				System.out.println("getting cell value..! 1");
 
-			XSSFSheet sheet = workbook.getSheetAt(0);
-			System.out.println("XSSFSheet Object created..! ");
+				Cell cell = cellIterator.next();
+				System.out.println("getting cell value..! 2");
 
-			Iterator ite = sheet.rowIterator();
-			System.out.println("Row Iterator invoked..! ");
-
-			String date = (String) session.getAttribute("dateOfUpload");
-			stmt.execute("DELETE FROM PRODUCT"); // ВЫНЕСТИ В ДАО ?
-
-			int incorrect = 0;
-			while (ite.hasNext()) {
-				Row row = (Row) ite.next();
-				System.out.println("Row value fetched..! ");
-				Iterator<Cell> cellIterator = row.cellIterator();
-				System.out.println("Cell Iterator invoked..! ");
-				int index = 1;
-				while (cellIterator.hasNext() && index < 4) {
-					System.out.println("getting cell value..! 1");
-
-					Cell cell = cellIterator.next();
-					System.out.println("getting cell value..! 2");
-
-					switch (cell.getCellType()) {
-					case Cell.CELL_TYPE_STRING: // handle string columns
-						prepStmt.setString(index, cell.getStringCellValue());
-						break;
-					case Cell.CELL_TYPE_NUMERIC: // handle double data
-						int i = (int) cell.getNumericCellValue();
-						prepStmt.setInt(index, (int) cell.getNumericCellValue());
-						break;
+				switch (cell.getCellType()) {
+				case Cell.CELL_TYPE_STRING: // handle string columns
+					if (index == 2) {
+						product.setArticle(cell.getStringCellValue());
+					} else if (index == 4) {
+						product.setDate(date);
 					}
-					index++;
+					break;
+				case Cell.CELL_TYPE_NUMERIC: // handle double data
+					if (index == 1) {
+						int i = (int) cell.getNumericCellValue();
+						product.setArticleCode((int) cell.getNumericCellValue());
+					} else if (index == 3) {
+						int i = (int) cell.getNumericCellValue();
+						product.setPrice((int) cell.getNumericCellValue());
+					}
+					break;
 				}
-				prepStmt.setString(4, date);
-				prepStmt.executeUpdate();
-				if (index < 4) {
-					incorrect++;
-				}
+				index++;
 			}
-			session.setAttribute("incorrect", incorrect);
-			ite = null;
-			fis.close();
-			prepStmt.close();
-			cn.close();
+			product.setDate(date);
+			daoProductImpl.createProduct(product);
 
-		} catch (Exception e) {
-			e.printStackTrace();
+			if (index < 4) {
+				incorrect++;
+			}
 		}
+		session.setAttribute("incorrect", incorrect);
+		ite = null;
+		fis.close();
 
 		String encodeURL = response.encodeURL("/next.jsp");
 		request.getRequestDispatcher(encodeURL).forward(request, response);

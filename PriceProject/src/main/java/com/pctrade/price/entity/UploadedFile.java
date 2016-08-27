@@ -57,4 +57,9 @@ public class UploadedFile {
 		this.updated = updated;
 	}
 
+	@Override
+	public String toString() {
+		return "UploadedFile [id=" + id + ", fileName=" + fileName + ", sizeKb=" + sizeKb + ", uploadDate=" + uploadDate
+				+ ", created=" + created + ", updated=" + updated + "]";
+	}
 }

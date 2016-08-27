@@ -6,7 +6,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -32,67 +31,73 @@ public class WriteCSV extends HttpServlet {
 		response.setContentType("text/html; charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
-
 		int count = 1;
-	//	int incorr = 0;
-		String uploadDate = (String) session.getAttribute("dateOfUpload");
+		// int incorr = 0;
+		String uploadDate = (String)session.getAttribute("dateOfUpload");
 
-		//try {
+		// try {
+		// BufferedReader fileOut = new BufferedReader(new InputStreamReader(new
+		// FileInputStream(
+		 //getServletContext().getInitParameter("file-upload") +
+		 //session.getAttribute("lastFileNameUpload")),
+		 //"utf-8"));
+		// for (String line; (line = fileOut.readLine()) != null;) {
+		// System.out.println(count + ": " + line);
+		// count++;
+		// String[] arr = line.split(",");
+		// for (int i = 0; i < arr.length; i++) {
+		//
+		// DaoProductImpl daoProductImpl = new DaoProductImpl();
+		// Product product = new Product();
+		// product.setArticleCode(Integer.parseInt(arr[0]));
+		// product.setArticle(arr[1]);
+		// product.setPrice(Integer.parseInt(arr[2]));
+		// product.setDate(uploadDate);
+		//
+		// daoProductImpl.createProduct(product);
+		// // if (arr.length < 3) {
+		// // incorr++;
+		// // }
+		// }
+		// }
+		// session.setAttribute("incorr", incorr);
+		// fileOut.close();
 
-//			BufferedReader fileOut = new BufferedReader(new InputStreamReader(new FileInputStream(
-//					getServletContext().getInitParameter("file-upload") + session.getAttribute("lastFileNameUpload")),
-//					"utf-8"));
-//			for (String line; (line = fileOut.readLine()) != null;) {
-//				System.out.println(count + ": " + line);
-//				count++;
-//				String[] arr = line.split(",");
-//				for (int i = 0; i < arr.length; i++) {
-//
-//					DaoProductImpl daoProductImpl = new DaoProductImpl();
-//					Product product = new Product();
-//					product.setArticleCode(Integer.parseInt(arr[0]));
-//					product.setArticle(arr[1]);
-//					product.setPrice(Integer.parseInt(arr[2]));
-//					product.setDate(uploadDate);
-//
-//					daoProductImpl.createProduct(product);
-//					// if (arr.length < 3) {
-//					// incorr++;
-//					// }
-//				}
-//			}
-//			session.setAttribute("incorr", incorr);
-//			fileOut.close();
-			
-			
-			
-			
-//		} catch (Exception ex) {
-//			System.out.println(ex);
-//			session.setAttribute("ex", ex.getClass());
-//		}
-		
-String csvFile = "C:\\Users\\Monika\\Desktop\\csv.txt";
-		
+		// } catch (Exception ex) {
+		// System.out.println(ex);
+		// session.setAttribute("ex", ex.getClass());
+		// }
+		DaoProductImpl daoProductImpl = new DaoProductImpl();
+		daoProductImpl.deleteTable();
+
+		String csvFile = getServletContext().getInitParameter("file-upload") +
+				 session.getAttribute("lastFileNameUpload");
+
 		CSVReader reader = null;
-        try {
-            reader = new CSVReader(new FileReader(csvFile));
-            String[] arr;
-            while ((arr = reader.readNext()) != null) {
-                System.out.println( arr[0] + " " + arr[1] + " " + arr[2] );
-            	DaoProductImpl daoProductImpl = new DaoProductImpl();
+		try {
+			reader = new CSVReader(new FileReader(csvFile));
+			String[] arr;
+			while ((arr = reader.readNext()) != null) {
+				System.out.println(arr[0] + " " + arr[1] + " " + arr[2]);				
 				Product product = new Product();
-				product.setArticleCode(Integer.parseInt(arr[0]));
-				product.setArticle(arr[1]);
-				product.setPrice(Integer.parseInt(arr[2]));
+				try{
+				product.setArticleCode(Integer.valueOf(arr[0].trim()));
+				product.setArticle(arr[1]);				
+				product.setPrice(Integer.parseInt(arr[2].trim()));
 				product.setDate(uploadDate);
-
 				daoProductImpl.createProduct(product);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-		
+				
+					  
+				}catch(NumberFormatException ex){ // handle your exception
+				   System.out.println(" и опять  ! ! !");
+				}
+				
+				//System.out.println(daoProductImpl.loadAllProductList());
+				//System.out.println(daoProductImpl.loadProductById(5));
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 		String encodingURL = response.encodeRedirectURL("/csvReader.jsp");
 		request.getRequestDispatcher(encodingURL).forward(request, response);
