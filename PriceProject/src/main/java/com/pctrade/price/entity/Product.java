@@ -1,26 +1,26 @@
 package com.pctrade.price.entity;
 
 public class Product {
-	private int id;
-	private int articleCode;
+	private Integer id;
+	private Integer articleCode;
 	private String article;
-	private int price;
+	private Integer price;
 	private String date;
 	private String status;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public int getArticleCode() {
+	public Integer getArticleCode() {
 		return articleCode;
 	}
 
-	public void setArticleCode(int articleCode) {
+	public void setArticleCode(Integer articleCode) {
 		this.articleCode = articleCode;
 	}
 
@@ -32,11 +32,11 @@ public class Product {
 		this.article = article;
 	}
 
-	public int getPrice() {
+	public Integer getPrice() {
 		return price;
 	}
 
-	public void setPrice(int price) {
+	public void setPrice(Integer price) {
 		this.price = price;
 	}
 
@@ -58,7 +58,7 @@ public class Product {
 
 	@Override
 	public String toString() {
-		return "Product [id=" + id + ", articleCode=" + articleCode + ", article=" + article + ", price=" + price
-				+ ", date=" + date + ", status=" + status + "]";
+		return articleCode + "," + article + "," + price
+				+ "," + date + "," + status;
 	}
 }

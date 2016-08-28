@@ -2,18 +2,18 @@ package com.pctrade.price.entity;
 
 public class UploadedFile {
 
-	private int id;
+	private Integer id;
 	private String fileName;
-	private int sizeKb;
+	private Integer sizeKb;
 	private String uploadDate;
 	private String created;
 	private String updated;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -25,11 +25,11 @@ public class UploadedFile {
 		this.fileName = fileName;
 	}
 
-	public int getSizeKb() {
+	public Integer getSizeKb() {
 		return sizeKb;
 	}
 
-	public void setSizeKb(int sizeKb) {
+	public void setSizeKb(Integer sizeKb) {
 		this.sizeKb = sizeKb;
 	}
 

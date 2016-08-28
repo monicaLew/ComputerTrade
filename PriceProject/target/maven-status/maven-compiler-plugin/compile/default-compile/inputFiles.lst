@@ -1,12 +1,12 @@
 C:\MARINA\Project\PriceProject\src\main\java\com\pctrade\price\servlet\ConvertCsvToXlsx.java
-C:\MARINA\Project\PriceProject\src\main\java\com\pctrade\price\servlet\Parsing.java
-C:\MARINA\Project\PriceProject\src\main\java\com\pctrade\price\servlet\FileInfo.java
+C:\MARINA\Project\PriceProject\src\main\java\com\pctrade\price\servlet\SaveFileInfo.java
+C:\MARINA\Project\PriceProject\src\main\java\com\pctrade\price\servlet\WriteExcelInEmrtyDb.java
 C:\MARINA\Project\PriceProject\src\main\java\com\pctrade\price\dao\DaoProductImpl.java
-C:\MARINA\Project\PriceProject\src\main\java\com\pctrade\price\servlet\WriteCSV.java
 C:\MARINA\Project\PriceProject\src\main\java\com\pctrade\price\servlet\UploadServlet.java
 C:\MARINA\Project\PriceProject\src\main\java\com\pctrade\price\dao\DaoException.java
+C:\MARINA\Project\PriceProject\src\main\java\com\pctrade\price\servlet\UpdateExcel.java
 C:\MARINA\Project\PriceProject\src\main\java\com\pctrade\price\dao\DaoProduct.java
-C:\MARINA\Project\PriceProject\src\main\java\com\pctrade\price\servlet\DBconnect.java
+C:\MARINA\Project\PriceProject\src\main\java\com\pctrade\price\servlet\WriteCsvInEmptyDb.java
 C:\MARINA\Project\PriceProject\src\main\java\com\pctrade\price\servlet\UpdateCSV.java
 C:\MARINA\Project\PriceProject\src\main\java\com\pctrade\price\entity\UploadedFile.java
 C:\MARINA\Project\PriceProject\src\main\java\com\pctrade\price\dao\DaoUploadedFileImpl.java

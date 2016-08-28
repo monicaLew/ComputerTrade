@@ -6,14 +6,16 @@ import com.pctrade.price.entity.UploadedFile;
 
 public interface DaoUploadedFile {
 
-	public List<UploadedFile> loadAllUploadedFileInfoList();
+	List<UploadedFile> loadAllUploadedFileInfoList();
 
-	public UploadedFile loadUploadedFileInfoById(Integer uploadedFiletId);
+	UploadedFile loadUploadedFileInfoById(Integer uploadedFiletId);
 
-	public void createUploadedFileInfo(UploadedFile file); // INSERT
+	void createUploadedFileInfo(UploadedFile file); // INSERT
 
-	public void updateUploadedFileInfo(UploadedFile file);
+	void updateUploadedFileInfo(UploadedFile file);
 
-	public void deleteUploadedFileInfo(Integer uploadedFiletId);
+	void deleteUploadedFileInfo(Integer uploadedFiletId);
+
+	void deleteTable();
 
 }

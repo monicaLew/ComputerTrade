@@ -16,6 +16,7 @@ public class DaoUploadedFileImpl implements DaoUploadedFile {
 	private static final String SELECT_FILE_INFO_BY_ID = "SELECT `ID`, `FILE_NAME`, `SIZE_KB`, `UPLOAD_DATE`, `CREATED`, `LAST_UPDATED` FROM FILE_INFO WHERE ID =";
 	private static final String INSERT_INTO_FILE_INFO = "INSERT INTO FILE_INFO(`FILE_NAME` ,`SIZE_KB` ,`UPLOAD_DATE`) VALUES (?,?,?)";
 	private static final String DELETE_FILE_INFO_BY_ID = "DELETE FROM FILE_INFO WHERE ID =";
+	private static final String DELETE = "DELETE FROM FILE_INFO";
 
 	// private static final String vs private final static String ???
 
@@ -43,21 +44,7 @@ public class DaoUploadedFileImpl implements DaoUploadedFile {
 		} catch (SQLException e) {
 			throw new DaoException(e);
 		} finally {
-			try {
-				if (resultSet != null) {
-					resultSet.close();
-				}
-			} catch (Exception e) {
-				throw new DaoException(e);
-			}
-			try {
-				if (preparedStatement != null) {
-					preparedStatement.close();
-				}
-			} catch (SQLException e) {
-				throw new DaoException(e);
-			}
-			ConnectionManager.closeConnection(connection);
+			ConnectionManager.closeDbResources(connection, preparedStatement, resultSet);
 		}
 
 		return uploadedFileInfoList;
@@ -79,29 +66,12 @@ public class DaoUploadedFileImpl implements DaoUploadedFile {
 			uploadedFile.setSizeKb(resultSet.getInt("SIZE_KB"));
 			uploadedFile.setUploadDate(resultSet.getString("UPLOAD_DATE"));
 			uploadedFile.setCreated(resultSet.getString("CREATED"));
-			uploadedFile.setCreated(resultSet.getString("LAST_UPDATED")); // переопределить
-																			// в
-																			// энтити
-																			// toString
+			uploadedFile.setCreated(resultSet.getString("LAST_UPDATED")); 
 
 		} catch (SQLException e) {
 			throw new DaoException(e);
 		} finally {
-			try {
-				if (resultSet != null) { // memory leak
-					resultSet.close();
-				}
-			} catch (Exception e) {
-				throw new DaoException(e);
-			}
-			try {
-				if (preparedStatement != null) {
-					preparedStatement.close();
-				}
-			} catch (SQLException e) {
-				throw new DaoException(e);
-			}
-			ConnectionManager.closeConnection(connection);
+			ConnectionManager.closeDbResources(connection, preparedStatement, resultSet);
 		}
 		return uploadedFile;
 	}
@@ -120,14 +90,7 @@ public class DaoUploadedFileImpl implements DaoUploadedFile {
 		} catch (SQLException e) {
 			throw new DaoException(e);
 		} finally {
-			try {
-				if (preparedStatement != null) {
-					preparedStatement.close();
-				}
-			} catch (Exception e) {
-				throw new DaoException(e);
-			}
-			ConnectionManager.closeConnection(connection);
+			ConnectionManager.closeDbResources(connection, preparedStatement);
 		}
 
 	}
@@ -150,14 +113,21 @@ public class DaoUploadedFileImpl implements DaoUploadedFile {
 		} catch (SQLException e) {
 			throw new DaoException(e);
 		} finally {
-			try {
-				if (preparedStatement != null) {
-					preparedStatement.close();
-				}
-			} catch (Exception e) {
-				throw new DaoException(e);
-			}
-			ConnectionManager.closeConnection(connection);
+			ConnectionManager.closeDbResources(connection, preparedStatement);
+		}
+	}
+
+	public void deleteTable() {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		try {
+			connection = ConnectionManager.getConnection();
+			preparedStatement = connection.prepareStatement(DELETE);
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			throw new DaoException(e);
+		} finally {
+			ConnectionManager.closeDbResources(connection, preparedStatement);
 		}
 	}
 }

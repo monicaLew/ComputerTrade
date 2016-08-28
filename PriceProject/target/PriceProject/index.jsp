@@ -16,22 +16,11 @@ Select a file to upload: <br /><br/>
 </form>
 <br/>
 <br/>
-</form>
-<form action="WriteCSV" method="post"
-                        enctype="multipart/form-data">
-                       
-<input type="submit" value=" ReadWrite CSV into DB " />
-<br/>
-</form>
 <br/>
 <br/>
 <br/>
 <br/>
-<br/>
-<form action="CsvRead" method="post"
-                        enctype="multipart/form-data">
-<input type="submit" value=" CsvReaderMy " />
-</form>	
+<br/>	
 <br/>
 <form action="ConvertCsvToXlsx" method="post"
                         enctype="multipart/form-data">
