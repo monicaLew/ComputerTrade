@@ -64,6 +64,13 @@
 		<servlet-name>UpdateExcel</servlet-name>
 		<servlet-class>com.pctrade.price.servlet.UpdateExcel</servlet-class>
 	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>ReadOutputFromDB</display-name>
+		<servlet-name>ReadOutputFromDB</servlet-name>
+		<servlet-class>com.pctrade.price.servlet.ReadOutputFromDB</servlet-class>
+	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>UploadServlet</servlet-name>
@@ -96,5 +103,9 @@
 	<servlet-mapping>
 		<servlet-name>UpdateExcel</servlet-name>
 		<url-pattern>/UpdateExcel</url-pattern>
-	</servlet-mapping>	
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ReadOutputFromDB</servlet-name>
+		<url-pattern>/ReadOutputFromDB</url-pattern>
+	</servlet-mapping>
 </web-app>

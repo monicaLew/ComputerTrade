@@ -11,7 +11,7 @@
 	<br>
 	<h3>Check File matching</h3>
 	<br>
-	<p>or check the exception message: ${exception} </p>
+	<p>or check the exception message: ${exception}</p>
 	<br>
 	<br>
 	<form action="index.jsp" method="post">

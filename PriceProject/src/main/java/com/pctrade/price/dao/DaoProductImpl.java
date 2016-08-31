@@ -30,7 +30,7 @@ public class DaoProductImpl implements DaoProduct {
 		List<Product> productList = new ArrayList<Product>();
 
 		try {
-			connection = ConnectionManager.getConnection();
+			connection = ConnectionManager.getManager().getConnection();
 			preparedStatement = connection.prepareStatement(SELECT_ALL_PRODUCT);
 			resultSet = preparedStatement.executeQuery();
 
@@ -59,7 +59,7 @@ public class DaoProductImpl implements DaoProduct {
 		ResultSet resultSet = null;
 		Product product = new Product();
 		try {
-			connection = ConnectionManager.getConnection();
+			connection = ConnectionManager.getManager().getConnection();
 			preparedStatement = connection.prepareStatement(SELECT_PRODUCT_BY_ID + productId);
 
 			resultSet = preparedStatement.executeQuery();
@@ -82,7 +82,7 @@ public class DaoProductImpl implements DaoProduct {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		try {
-			connection = ConnectionManager.getConnection();
+			connection = ConnectionManager.getManager().getConnection();
 			preparedStatement = connection.prepareStatement(INSERT_INTO_PRODUCT);
 
 			preparedStatement.setInt(1, product.getArticleCode());
@@ -103,7 +103,7 @@ public class DaoProductImpl implements DaoProduct {
 		ResultSet resultSet = null;
 		int count = 0;
 		try {
-			connection = ConnectionManager.getConnection();
+			connection = ConnectionManager.getManager().getConnection();
 			preparedStatement = connection
 					.prepareStatement(COUNT_PRODUCT_WITH_CERTAIN_ARTICLE_CODE + product.getArticleCode());
 			resultSet = preparedStatement.executeQuery();
@@ -123,7 +123,7 @@ public class DaoProductImpl implements DaoProduct {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		try {
-			connection = ConnectionManager.getConnection();
+			connection = ConnectionManager.getManager().getConnection();
 
 			preparedStatement = connection.prepareStatement(UPDATE_PRODUCT + product.getArticleCode());
 
@@ -143,7 +143,7 @@ public class DaoProductImpl implements DaoProduct {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		try {
-			connection = ConnectionManager.getConnection();
+			connection = ConnectionManager.getManager().getConnection();
 			preparedStatement = connection.prepareStatement(DELETE_PRODUCT_BY_ID + productId);
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
@@ -157,7 +157,7 @@ public class DaoProductImpl implements DaoProduct {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		try {
-			connection = ConnectionManager.getConnection();
+			connection = ConnectionManager.getManager().getConnection();
 			preparedStatement = connection.prepareStatement(DELETE);
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
@@ -172,7 +172,7 @@ public class DaoProductImpl implements DaoProduct {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		try {
-			connection = ConnectionManager.getConnection();
+			connection = ConnectionManager.getManager().getConnection();
 			preparedStatement = connection.prepareStatement(UPDATE_PRODUCT_SET_NOTAVAILABLE);
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
@@ -187,7 +187,7 @@ public class DaoProductImpl implements DaoProduct {
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		try {
-			connection = ConnectionManager.getConnection();
+			connection = ConnectionManager.getManager().getConnection();
 			connection.setAutoCommit(false);
 			preparedStatement = connection.prepareStatement(UPDATE_PRODUCT_SET_NOTAVAILABLE);
 			preparedStatement.executeUpdate();
@@ -233,7 +233,7 @@ public class DaoProductImpl implements DaoProduct {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		try {
-			connection = ConnectionManager.getConnection();
+			connection = ConnectionManager.getManager().getConnection();
 			connection.setAutoCommit(false);
 
 			preparedStatement = connection.prepareStatement(DELETE);

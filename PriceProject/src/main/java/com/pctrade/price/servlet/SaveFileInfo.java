@@ -27,18 +27,9 @@ public class SaveFileInfo extends HttpServlet {
 		HttpSession session = request.getSession();
 		response.setContentType("text/html");
 		response.setCharacterEncoding("UTF-8");
-		
-		
-
-		//String fileName = (String) session.getAttribute("lastFileNameUpload");
-		//int fileSize = (Integer) session.getAttribute("fileSize");
-		//String date = (String) session.getAttribute("dateOfUpload");
 
 		DaoUploadedFile daoUploadedFile = new DaoUploadedFileImpl();
-		UploadedFile uploadedFile = (UploadedFile)session.getAttribute("uploadedFileInfo");
-		//uploadedFile.setFileName(fileName);
-		//uploadedFile.setSizeKb(fileSize);
-		//uploadedFile.setUploadDate(date);
+		UploadedFile uploadedFile = (UploadedFile) session.getAttribute("uploadedFileInfo");
 
 		daoUploadedFile.createUploadedFileInfo(uploadedFile);
 		System.out.println(" you were here  0_o");
@@ -46,5 +37,4 @@ public class SaveFileInfo extends HttpServlet {
 		String encodeURL = response.encodeURL("/lastUploadFile.jsp");
 		request.getRequestDispatcher(encodeURL).forward(request, response);
 	}
-
 }

@@ -10,8 +10,8 @@
 <h2>Table in DB has Updated</h2>
 	<br>	
 	<br>
-	<form action="DounloadNewPriceAsCSV" method="post">
-		<input type="submit" value="Dounload new Price as CSV" />
+	<form action="ReadOutputFromDB" method="post">
+		<input type="submit" value="Download new Price" />
 	</form>
 	<br>
 	<br>

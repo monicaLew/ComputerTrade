@@ -12,12 +12,9 @@
 	<br />
 	<form action="UploadServlet" method="post"
 		enctype="multipart/form-data">
-		<input type="file" name="file" size="50" /> 
-		<br /> 
-		<br /> 
-		<input
+		<input type="file" name="file" size="50" /> <br /> <br /> <input
 			type="submit" value="Upload File" />
 	</form>
-	<br />	
+	<br />
 </body>
 </html>

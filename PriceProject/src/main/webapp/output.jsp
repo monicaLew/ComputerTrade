@@ -17,8 +17,7 @@
 	<br />
 	<form action="ConvertCsvToXlsx" method="post"
 		enctype="multipart/form-data">
-		<input type="submit"
-			value=" Convert CSV to Excel(it doesn't work right)" />
+		<input type="submit" value=" Convert CSV to Excel" />
 	</form>
 </body>
 </html>

@@ -10,7 +10,8 @@
 <body>
 	<br>
 	<p>
-		Name of Last Uploaded File: &nbsp; ${lastFileNameUpload} <br>
+		Name of Last Uploaded File: &nbsp; ${lastFileNameUpload} &nbsp;&nbsp;
+		Size:&nbsp; ${fileSize} &nbsp; KB<br>
 	<form action="SaveFileInfo" method="post">
 		<input type="submit" value=" SAVE " />
 	</form>

@@ -16,9 +16,7 @@ public class DaoUploadedFileImpl implements DaoUploadedFile {
 	private static final String SELECT_FILE_INFO_BY_ID = "SELECT `ID`, `FILE_NAME`, `SIZE_KB`, `UPLOAD_DATE`, `CREATED`, `LAST_UPDATED` FROM FILE_INFO WHERE ID =";
 	private static final String INSERT_INTO_FILE_INFO = "INSERT INTO FILE_INFO(`FILE_NAME` ,`SIZE_KB` ,`UPLOAD_DATE`) VALUES (?,?,?)";
 	private static final String DELETE_FILE_INFO_BY_ID = "DELETE FROM FILE_INFO WHERE ID =";
-	private static final String DELETE = "DELETE FROM FILE_INFO";
-
-	// private static final String vs private final static String ???
+	private static final String DELETE = "DELETE FROM FILE_INFO";	
 
 	public List<UploadedFile> loadAllUploadedFileInfoList() {
 		Connection connection = null;
@@ -27,7 +25,7 @@ public class DaoUploadedFileImpl implements DaoUploadedFile {
 		List<UploadedFile> uploadedFileInfoList = new ArrayList<UploadedFile>();
 
 		try {
-			connection = ConnectionManager.getConnection();
+			connection = ConnectionManager.getManager().getConnection();
 			preparedStatement = connection.prepareStatement(SELECT_ALL_FILE_INFO);
 			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
@@ -57,7 +55,7 @@ public class DaoUploadedFileImpl implements DaoUploadedFile {
 		UploadedFile uploadedFile = new UploadedFile();
 
 		try {
-			connection = ConnectionManager.getConnection();
+			connection = ConnectionManager.getManager().getConnection();
 			preparedStatement = connection.prepareStatement(SELECT_FILE_INFO_BY_ID);
 			resultSet = preparedStatement.executeQuery();
 			resultSet.next();
@@ -81,7 +79,7 @@ public class DaoUploadedFileImpl implements DaoUploadedFile {
 		PreparedStatement preparedStatement = null;
 
 		try {
-			connection = ConnectionManager.getConnection();
+			connection = ConnectionManager.getManager().getConnection();
 			preparedStatement = connection.prepareStatement(INSERT_INTO_FILE_INFO);
 			preparedStatement.setString(1, file.getFileName());
 			preparedStatement.setInt(2, file.getSizeKb());
@@ -103,7 +101,7 @@ public class DaoUploadedFileImpl implements DaoUploadedFile {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		try {
-			connection = ConnectionManager.getConnection();
+			connection = ConnectionManager.getManager().getConnection();
 			preparedStatement = connection.prepareStatement(DELETE_FILE_INFO_BY_ID + uploadedFiletId);
 			preparedStatement.executeUpdate();
 
@@ -121,7 +119,7 @@ public class DaoUploadedFileImpl implements DaoUploadedFile {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		try {
-			connection = ConnectionManager.getConnection();
+			connection = ConnectionManager.getManager().getConnection();
 			preparedStatement = connection.prepareStatement(DELETE);
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {

@@ -6,8 +6,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ConnectionManager {
+	private final static ConnectionManager connectionManager = new ConnectionManager();
 
 	private final static String URL = "jdbc:mysql://localhost/PC_TRADE";
 	private final static String USER = "root";
@@ -25,22 +28,36 @@ public class ConnectionManager {
 		super();
 	}
 
-	public static Connection getConnection() throws SQLException {
-		return DriverManager.getConnection(URL, USER, PASSWORD);
+	public static ConnectionManager getManager() {
+		return connectionManager;
+	}
+
+	private List<Connection> connectionList = new ArrayList<Connection>();
+
+	public Connection getConnection() {
+		if (connectionList.isEmpty()) {
+			try {
+				return DriverManager.getConnection(URL, USER, PASSWORD);
+			} catch (SQLException e) {
+				throw new RuntimeException(e);
+			}
+		}
+		return connectionList.remove(0);
+	}
+
+	public void close(Connection connection) {
+		connectionList.add(connection);
 	}
 
 	public static void closeDbResources(Connection connection, PreparedStatement preparedStatement) {
-		ConnectionManager.closeStatement(preparedStatement);
-		ConnectionManager.closeConnection(connection);
+		closeDbResources(connection, preparedStatement, null);
 	}
 
 	public static void closeDbResources(Connection connection, PreparedStatement preparedStatement,
 			ResultSet resultSet) {
-		ConnectionManager.closeResultSet(resultSet);
-		ConnectionManager.closeStatement(preparedStatement); // или
-																// closeStatement(preparedStatement);
-																// почему ?
-		ConnectionManager.closeConnection(connection);
+		closeResultSet(resultSet);
+		closeStatement(preparedStatement);
+		closeConnection(connection);
 	}
 
 	public static void closeConnection(Connection connection) {

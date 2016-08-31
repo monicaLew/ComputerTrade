@@ -49,13 +49,12 @@ public class ConvertCsvToXlsx extends HttpServlet {
 
 			DiskFileItemFactory factory = new DiskFileItemFactory();
 			List<FileItem> items = new ServletFileUpload(factory).parseRequest(request);
-			String outputType = "1"; // default output type
+			String outputType = "1";
 			for (FileItem item : items) {
 				if (item.isFormField()) {
 					String fieldname = item.getFieldName();
 					if (fieldname.equals("2")) {
-						outputType = item.getString(); // identifies the type of
-														// conversion required
+						outputType = item.getString();
 					}
 				} else {
 					filecontent = item.getInputStream();
@@ -66,10 +65,10 @@ public class ConvertCsvToXlsx extends HttpServlet {
 			String[] nextLine;
 			int lnNum = 0;
 
-			HSSFWorkbook new_workbook = new HSSFWorkbook();
-			HSSFSheet sheet = new_workbook.createSheet("CSV2XLS");
-			XSSFWorkbook new_workbook_xlsx = new XSSFWorkbook();
-			XSSFSheet sheet_xlsx = new_workbook_xlsx.createSheet("CSV2XLS");
+			HSSFWorkbook workBook = new HSSFWorkbook();
+			HSSFSheet sheet = workBook.createSheet("CSV2XLS");
+			XSSFWorkbook workBookXlsx = new XSSFWorkbook();
+			XSSFSheet sheetXlsx = workBookXlsx.createSheet("CSV2XLS");
 			Row row;
 			if (outputType.equals("1")) {
 				/* XLS format */
@@ -79,43 +78,37 @@ public class ConvertCsvToXlsx extends HttpServlet {
 				/* XLSX format */
 				response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
 			}
-			Map<String, Object[]> excel_data = new HashMap<String, Object[]>();
+			Map<String, Object[]> excelData = new HashMap<String, Object[]>();
 			while ((nextLine = reader.readNext()) != null) {
 				lnNum++;
-				excel_data.put(Integer.toString(lnNum),
+				excelData.put(Integer.toString(lnNum),
 						new Object[] { nextLine[0], nextLine[1], nextLine[2], nextLine[3], nextLine[4] });
 			}
 			reader.close();
 			filecontent.close();
-			/* Ready to convert CSV to logical Excel object */
-			Set<String> keyset = excel_data.keySet();
-			int rownum = 0;
-			for (String key : keyset) { // loop through the data and add them to
-										// the cell
+
+			Set<String> keyset = excelData.keySet();
+			int rowNum = 0;
+			for (String key : keyset) {
 				if (outputType.equals("1")) {
-					row = sheet.createRow(
-							rownum++); /*
-										 * Create rows in the doucment using the
-										 * right sheet object
-										 */
+					row = sheet.createRow(rowNum++);
 				} else {
-					row = sheet_xlsx.createRow(rownum++);
+					row = sheetXlsx.createRow(rowNum++);
 				}
-				Object[] objArr = excel_data.get(key);
-				int cellnum = 0;
+				Object[] objArr = excelData.get(key);
+				int cellNum = 0;
 				for (Object obj : objArr) {
-					Cell cell = row.createCell(cellnum++);
+					Cell cell = row.createCell(cellNum++);
 					if (obj instanceof Double)
 						cell.setCellValue((Double) obj);
 					else
 						cell.setCellValue((String) obj);
 				}
 			}
-			/* Write response to output stream */
 			if (outputType.equals("1")) {
-				new_workbook.write(out);
+				workBook.write(out);
 			} else {
-				new_workbook_xlsx.write(out);
+				workBookXlsx.write(out);
 			}
 		} catch (Exception e) {
 			session.setAttribute("exception", "Convert fail: " + e);

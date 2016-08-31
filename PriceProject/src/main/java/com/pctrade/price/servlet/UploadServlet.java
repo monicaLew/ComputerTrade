@@ -22,8 +22,6 @@ public class UploadServlet extends HttpServlet {
 
 	private boolean isMultipart;
 	private String filePath;
-	// private int maxFileSize = 100 * 1024;
-	private int maxMemSize = 9 * 1024; // проверить чет не работает
 	private File file;
 
 	public void init() {
@@ -51,21 +49,11 @@ public class UploadServlet extends HttpServlet {
 				out.println("</html>");
 				return;
 			}
-			DiskFileItemFactory factory = new DiskFileItemFactory();
-			// maximum size that will be stored in memory
-			factory.setSizeThreshold(maxMemSize);
-			factory.setRepository(new File("c:\\temp")); // create folder in
-															// file
-															// system for ?
 
-			// Create a new file upload handler
+			DiskFileItemFactory factory = new DiskFileItemFactory();
 			ServletFileUpload upload = new ServletFileUpload(factory);
 
-			// upload.setSizeMax(maxFileSize);
-			// Parse the request to get file items.
 			List<FileItem> fileItems = upload.parseRequest(request);
-
-			// Process the uploaded file items
 			Iterator<FileItem> i = fileItems.iterator();
 
 			while (i.hasNext()) {
@@ -89,20 +77,6 @@ public class UploadServlet extends HttpServlet {
 					uploadedFileInfo.setSizeKb(sizeInKB);
 					uploadedFileInfo.setUploadDate(dOfUpload);
 					session.setAttribute("uploadedFileInfo", uploadedFileInfo);
-
-					ArrayList<String> thisSession = new ArrayList<String>();
-					thisSession.add((String) session.getAttribute("lastFileNameUpload"));
-					thisSession.add(String.valueOf(sizeInKB));
-					thisSession.add(dOfUpload);
-
-					Object historyAttribute = session.getAttribute("fileUploadHistory");
-					@SuppressWarnings("unchecked")
-					ArrayList<ArrayList<String>> filesUploadHistory = (ArrayList<ArrayList<String>>) historyAttribute;
-					if (filesUploadHistory == null) {
-						filesUploadHistory = new ArrayList<ArrayList<String>>();
-					}
-					filesUploadHistory.add(thisSession);
-					session.setAttribute("fileUploadHistory", filesUploadHistory);
 
 					String encodeURL = response.encodeURL("/lastUploadFile.jsp");
 					request.getRequestDispatcher(encodeURL).forward(request, response);
