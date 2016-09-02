@@ -6,11 +6,11 @@ import com.pctrade.price.entity.Product;
 
 public interface DaoProduct {
 
-	public List<Product> loadAllProductList();
+	public List<Product> showAllProductList();
 
-	Product loadProductById(Integer productId);
+	Product showProductById(Integer productId);
 
-	void createProduct(Product product); // INSERT
+	void createProduct(Product product); 
 
 	void updateProduct(Product product);
 
@@ -22,8 +22,8 @@ public interface DaoProduct {
 
 	void setNotAvailableStatusForAll();
 
-	int checkProduct(Product product);
+	int countProductWithArticleCode(Product product);
 
-	void deleteTable();
+	void clearTable();
 
 }

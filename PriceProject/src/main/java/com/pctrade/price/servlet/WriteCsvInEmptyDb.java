@@ -42,8 +42,7 @@ public class WriteCsvInEmptyDb extends HttpServlet {
 			session.setAttribute("exception", e);
 			String encodingURL = response.encodeRedirectURL("/errorPage.jsp");
 			request.getRequestDispatcher(encodingURL).forward(request, response);
-		}
-		System.out.println(" парам та дам  !");
+		}		
 		String encodingURL = response.encodeRedirectURL("/csvWrite.jsp");
 		request.getRequestDispatcher(encodingURL).forward(request, response);
 	}

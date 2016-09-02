@@ -31,8 +31,7 @@ public class SaveFileInfo extends HttpServlet {
 		DaoUploadedFile daoUploadedFile = new DaoUploadedFileImpl();
 		UploadedFile uploadedFile = (UploadedFile) session.getAttribute("uploadedFileInfo");
 
-		daoUploadedFile.createUploadedFileInfo(uploadedFile);
-		System.out.println(" you were here  0_o");
+		daoUploadedFile.createUploadedFileInfo(uploadedFile);		
 
 		String encodeURL = response.encodeURL("/lastUploadFile.jsp");
 		request.getRequestDispatcher(encodeURL).forward(request, response);

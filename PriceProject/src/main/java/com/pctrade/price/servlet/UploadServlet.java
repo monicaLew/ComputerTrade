@@ -82,8 +82,7 @@ public class UploadServlet extends HttpServlet {
 					request.getRequestDispatcher(encodeURL).forward(request, response);
 				}
 			}
-		} catch (Exception ex) {
-			System.out.println("словили");
+		} catch (Exception ex) {			
 			session.setAttribute("exception", ex);
 			String encodingURL = response.encodeRedirectURL("/errorPage.jsp");
 			request.getRequestDispatcher(encodingURL).forward(request, response);
@@ -91,8 +90,7 @@ public class UploadServlet extends HttpServlet {
 	}
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, java.io.IOException {
-		System.out.println("doGET");
+			throws ServletException, java.io.IOException {		
 		throw new ServletException("GET method used with " + getClass().getName() + ": POST method required.");
 	}
 }

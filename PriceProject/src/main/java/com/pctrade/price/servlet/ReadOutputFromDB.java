@@ -32,7 +32,7 @@ public class ReadOutputFromDB extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 
 		DaoProduct daoProduct = new DaoProductImpl();
-		List<Product> productsList = daoProduct.loadAllProductList();
+		List<Product> productsList = daoProduct.showAllProductList();
 
 		File file = new File("C:\\priceList.txt");
 		FileWriter fileWriter = new FileWriter(file);

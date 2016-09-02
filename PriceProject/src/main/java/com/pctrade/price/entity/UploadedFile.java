@@ -6,7 +6,6 @@ public class UploadedFile {
 	private String fileName;
 	private Integer sizeKb;
 	private String uploadDate;
-	private String created;
 	private String updated;
 
 	public Integer getId() {
@@ -41,14 +40,6 @@ public class UploadedFile {
 		this.uploadDate = uploadDate;
 	}
 
-	public String getCreated() {
-		return created;
-	}
-
-	public void setCreated(String created) {
-		this.created = created;
-	}
-
 	public String getUpdated() {
 		return updated;
 	}
@@ -60,6 +51,7 @@ public class UploadedFile {
 	@Override
 	public String toString() {
 		return "UploadedFile [id=" + id + ", fileName=" + fileName + ", sizeKb=" + sizeKb + ", uploadDate=" + uploadDate
-				+ ", created=" + created + ", updated=" + updated + "]";
+				+ ", updated=" + updated + "]";
 	}
+
 }

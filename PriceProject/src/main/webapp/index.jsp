@@ -16,5 +16,17 @@
 			type="submit" value="Upload File" />
 	</form>
 	<br />
+	<br />
+	<br />
+	<form action="ScanCarPage" method="get" enctype="text/plain">
+		<p>
+			<b>ID from:</b><br> <input type="text" name="idFrom" size="40" />
+		</p>
+		<br />
+		<p>
+			<b>ID till:</b><br> <input type="text" name="idTill" size="40" />
+		</p>
+		<br /> <input type="submit" value="ScanningPage" />
+	</form>
 </body>
 </html>

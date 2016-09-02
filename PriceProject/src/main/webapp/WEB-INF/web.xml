@@ -71,6 +71,13 @@
 		<servlet-name>ReadOutputFromDB</servlet-name>
 		<servlet-class>com.pctrade.price.servlet.ReadOutputFromDB</servlet-class>
 	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>ScanCarPage</display-name>
+		<servlet-name>ScanCarPage</servlet-name>
+		<servlet-class>com.pctrade.price.servlet.ScanCarPage</servlet-class>
+	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>UploadServlet</servlet-name>
@@ -107,5 +114,9 @@
 	<servlet-mapping>
 		<servlet-name>ReadOutputFromDB</servlet-name>
 		<url-pattern>/ReadOutputFromDB</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ScanCarPage</servlet-name>
+		<url-pattern>/ScanCarPage</url-pattern>
 	</servlet-mapping>
 </web-app>

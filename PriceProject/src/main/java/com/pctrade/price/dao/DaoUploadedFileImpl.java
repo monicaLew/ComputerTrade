@@ -12,13 +12,13 @@ import com.pctrade.price.mysql.ConnectionManager;
 
 public class DaoUploadedFileImpl implements DaoUploadedFile {
 
-	private static final String SELECT_ALL_FILE_INFO = "SELECT `ID`, `FILE_NAME`, `SIZE_KB`, `UPLOAD_DATE`, `CREATED`, `LAST_UPDATED` FROM FILE_INFO";
-	private static final String SELECT_FILE_INFO_BY_ID = "SELECT `ID`, `FILE_NAME`, `SIZE_KB`, `UPLOAD_DATE`, `CREATED`, `LAST_UPDATED` FROM FILE_INFO WHERE ID =";
+	private static final String SELECT_ALL_FILE_INFO = "SELECT `ID`, `FILE_NAME`, `SIZE_KB`, `UPLOAD_DATE`, `LAST_UPDATED` FROM FILE_INFO";
+	private static final String SELECT_FILE_INFO_BY_ID = "SELECT `ID`, `FILE_NAME`, `SIZE_KB`, `UPLOAD_DATE`, `LAST_UPDATED` FROM FILE_INFO WHERE ID =?";
 	private static final String INSERT_INTO_FILE_INFO = "INSERT INTO FILE_INFO(`FILE_NAME` ,`SIZE_KB` ,`UPLOAD_DATE`) VALUES (?,?,?)";
-	private static final String DELETE_FILE_INFO_BY_ID = "DELETE FROM FILE_INFO WHERE ID =";
+	private static final String DELETE_FILE_INFO_BY_ID = "DELETE FROM FILE_INFO WHERE ID =?";
 	private static final String DELETE = "DELETE FROM FILE_INFO";	
 
-	public List<UploadedFile> loadAllUploadedFileInfoList() {
+	public List<UploadedFile> showAllUploadedFileInfoList() {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -33,9 +33,8 @@ public class DaoUploadedFileImpl implements DaoUploadedFile {
 				uploadedFile.setId(resultSet.getInt("ID"));
 				uploadedFile.setFileName(resultSet.getString("FILE_NAME"));
 				uploadedFile.setSizeKb(resultSet.getInt("SIZE_KB"));
-				uploadedFile.setUploadDate(resultSet.getString("UPLOAD_DATE"));
-				uploadedFile.setCreated(resultSet.getString("CREATED"));
-				uploadedFile.setCreated(resultSet.getString("LAST_UPDATED"));
+				uploadedFile.setUploadDate(resultSet.getString("UPLOAD_DATE"));				
+				uploadedFile.setUpdated(resultSet.getString("LAST_UPDATED"));
 				uploadedFileInfoList.add(uploadedFile);
 			}
 
@@ -44,11 +43,10 @@ public class DaoUploadedFileImpl implements DaoUploadedFile {
 		} finally {
 			ConnectionManager.closeDbResources(connection, preparedStatement, resultSet);
 		}
-
 		return uploadedFileInfoList;
 	}
 
-	public UploadedFile loadUploadedFileInfoById(Integer uploadedFiletId) {
+	public UploadedFile showUploadedFileInfoById(Integer uploadedFiletId) {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -57,15 +55,16 @@ public class DaoUploadedFileImpl implements DaoUploadedFile {
 		try {
 			connection = ConnectionManager.getManager().getConnection();
 			preparedStatement = connection.prepareStatement(SELECT_FILE_INFO_BY_ID);
+			preparedStatement.setInt(1, uploadedFiletId);
 			resultSet = preparedStatement.executeQuery();
-			resultSet.next();
+			 
+			if(resultSet.next()){
 			uploadedFile.setId(resultSet.getInt("ID"));
 			uploadedFile.setFileName(resultSet.getString("FILE_NAME"));
 			uploadedFile.setSizeKb(resultSet.getInt("SIZE_KB"));
-			uploadedFile.setUploadDate(resultSet.getString("UPLOAD_DATE"));
-			uploadedFile.setCreated(resultSet.getString("CREATED"));
-			uploadedFile.setCreated(resultSet.getString("LAST_UPDATED")); 
-
+			uploadedFile.setUploadDate(resultSet.getString("UPLOAD_DATE"));			
+			uploadedFile.setUpdated(resultSet.getString("LAST_UPDATED")); 
+			}
 		} catch (SQLException e) {
 			throw new DaoException(e);
 		} finally {
@@ -90,11 +89,10 @@ public class DaoUploadedFileImpl implements DaoUploadedFile {
 		} finally {
 			ConnectionManager.closeDbResources(connection, preparedStatement);
 		}
-
 	}
 
 	public void updateUploadedFileInfo(UploadedFile file) {
-		System.out.println(" Empty method ( ");
+		System.out.println(" Empty method ( ");                  // написать !
 	}
 
 	public void deleteUploadedFileInfo(Integer uploadedFiletId) {
@@ -102,10 +100,11 @@ public class DaoUploadedFileImpl implements DaoUploadedFile {
 		PreparedStatement preparedStatement = null;
 		try {
 			connection = ConnectionManager.getManager().getConnection();
-			preparedStatement = connection.prepareStatement(DELETE_FILE_INFO_BY_ID + uploadedFiletId);
+			preparedStatement = connection.prepareStatement(DELETE_FILE_INFO_BY_ID);
+			preparedStatement.setInt(1, uploadedFiletId);
 			preparedStatement.executeUpdate();
 
-			if (preparedStatement != null) { // как закрыть препСтэйтмент
+			if (preparedStatement != null) { 
 				preparedStatement.close();
 			}
 		} catch (SQLException e) {
@@ -115,7 +114,7 @@ public class DaoUploadedFileImpl implements DaoUploadedFile {
 		}
 	}
 
-	public void deleteTable() {
+	public void clearTable() {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		try {
