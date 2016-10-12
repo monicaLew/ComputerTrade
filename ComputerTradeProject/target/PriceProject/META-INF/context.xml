@@ -1,0 +1,13 @@
+<!DOCTYPE xml>
+<Context path="/09.jdbc-jndi-excellent-but-bad" docBase="09.jdbc-jndi-excellent-but-bad"
+	reloadable="true">
+
+	<!-- <Resource name="jdbc/personnel_department_db_resource" auth="Container" 
+		type="javax.sql.DataSource" maxActive="100" maxIdle="30" maxWait="10000" 
+		username="root" password="root" driverClassName="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost:3306/personnel_department_db"/> -->
+	<ResourceLink name="jdbc/pc_trade_mysql" global="jdbc/pc_trade_mysql"
+		type="javax.sql.DataSource" />
+
+	<ResourceLink name="jdbc/pc_trade_postgres" global="jdbc/pc_trade_postgres"
+		type="javax.sql.DataSource" />
+</Context>
